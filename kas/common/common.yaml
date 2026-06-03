@@ -1,0 +1,110 @@
+env:
+    HOME: null
+    BUILD_TYPE: null
+    MIRROR_DATA_PATH: null
+header:
+  version: 14
+
+repos:
+  bitbake:
+    url: "https://git.openembedded.org/bitbake"
+    tag: "yocto-6.0"
+    commit: "04f63c728153e2891153a20028ea6c3ca759e5b3"
+    path: layers/bitbake
+    layers: {}
+  meta-yocto:
+    url: "https://git.yoctoproject.org/meta-yocto"
+    tag: "yocto-6.0"
+    commit: "f9af6671226a9f63a3b137e0e4c8070ec845ae44"
+    path: "layers/meta-yocto"
+    layers:
+      meta-poky:
+      meta-yocto-bsp:
+  oe-core:
+    url: "https://git.openembedded.org/openembedded-core"
+    tag: "yocto-6.0"
+    commit: "9080220d364470cd6d517aadcad7e5e1c818c56e"
+    path: "layers/openembedded-core"
+    layers:
+      meta:
+  meta-boardfarm:
+    path: "layers/meta-boardfarm"
+machine: "qemuarm64"
+
+distro: "poky"
+
+target:
+  - core-image-minimal
+
+local_conf_header:
+  build-history: |
+    INHERIT += "buildhistory"
+    BUILDHISTORY_COMMIT = "1"
+    BUILDHISTORY_DIR = "${TOPDIR}/buildhistory"
+
+  systemd: |
+    INIT_MANAGER = "systemd"
+
+  # reduce_dispace: |
+  #   # IMAGE_FEATURES += "rm_work"
+  #   INHERIT += "rm_work"
+
+
+  parallel_builds: |
+    # Set number of parallel threads for building
+    BB_NUMBER_THREADS = "${@max(1, oe.utils.cpu_count() - 2)}"
+    PARALLEL_MAKE ?= "-j ${@max(1, oe.utils.cpu_count() - 2)}"
+
+  common-config: |
+    SDKMACHINE ?= "x86_64"
+    PACKAGE_CLASSES = "package_ipk"
+    USER_CLASSES ?= "buildstats"
+    CONF_VERSION = "2"
+    BB_DISKMON_DIRS ??= "\
+        STOPTASKS,${TMPDIR},1G,100K \
+        STOPTASKS,${DL_DIR},1G,100K \
+        STOPTASKS,${SSTATE_DIR},1G,100K \
+        STOPTASKS,/tmp,100M,100K \
+        HALT,${TMPDIR},100M,1K \
+        HALT,${DL_DIR},100M,1K \
+        HALT,${SSTATE_DIR},100M,1K \
+        HALT,/tmp,10M,1K"
+    DISTRO_FEATURES = " systemd ssh-server-openssh"
+    IMAGE_FEATURES += "ssh-server-openssh"
+    VIRTUAL-RUNTIME_init_manager = "systemd"
+    DISTRO_FEATURES:remove = "sysvinit"
+    IMAGE_INSTALL:append = " dhcpcd"
+    PATCHRESOLVE = "noop"
+    ACCEPT_FSL_EULA = "1"
+    ERROR_QA:remove = "version-going-backwards"
+
+  mirror_setup: |
+    BUILD_REPRODUCIBLE_BINARIES = "1"
+    BUILD_TYPE ?= "normal"
+    OVERRIDES .= ":${BUILD_TYPE}"
+    MIRROR_DATA_PATH ?= "${HOME}/yocto/yocto_data"
+    # CONF_VERSION = "1"
+    INHERIT += "${@ 'own-mirrors' if d.getVar('BUILD_TYPE', True) == 'normal' else ''}"
+    # Use local source mirror first
+    SOURCE_MIRROR_URL:normal = "file:///${MIRROR_DATA_PATH}/downloads/"
+    # Check mirror before rebuilding
+    SSTATE_MIRRORS:normal = "file://.* file://${MIRROR_DATA_PATH}/sstate-cache/PATH"
+    BB_GENERATE_MIRROR_TARBALLS:master = "1"
+    DL_DIR:master = "${MIRROR_DATA_PATH}/downloads"
+    SSTATE_DIR:master = "${MIRROR_DATA_PATH}/sstate-cache"
+    BUILDCFG_VARS += "DL_DIR SSTATE_DIR BUILD_TYPE"
+    BB_HASHSERVE = "none"
+    BB_HASHSERVE_UPSTREAM = ""
+    BB_SIGNATURE_HANDLER = "OEBasicHash"
+
+  enable_root_user: |
+    IMAGE_FEATURES += "allow-root-login empty-root-password"
+
+
+bblayers_conf_header:
+  kas: |
+    # Additional layers can be added here
+    LCONF_VERSION = "7"
+    BBPATH_EXTRA ??= ""
+
+build_system: oe
