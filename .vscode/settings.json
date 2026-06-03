@@ -1,0 +1,30 @@
+{
+  "git.enableCommitSigning": false,
+  "python.autoComplete.extraPaths": [
+    "${workspaceFolder}/layers/openembedded-core/meta/lib",
+    "${workspaceFolder}/layers/bitbake/lib"
+  ],
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}/layers/openembedded-core/meta/lib",
+    "${workspaceFolder}/layers/bitbake/lib"
+  ],
+  "files.associations": {
+    "*.conf": "bitbake",
+    "*.inc": "bitbake"
+  },
+  "bitbake.commandWrapper": "kas shell kas/common/common.yaml -c",
+  "bitbake.pathToBitbakeFolder": "${workspaceFolder}/layers/bitbake",
+  "bitbake.parseOnSave": false,
+  "files.watcherExclude": {
+    "**/build": true
+  },
+  "search.exclude": {
+    "**/build": true
+  },
+  "python.analysis.exclude": [
+    "**/build", "**/node_modules", "**/__pycache__", "**/.*", ".venv"
+  ],
+  "git.repositoryScanIgnoredFolders": [
+    "**/build"
+  ]
+}
