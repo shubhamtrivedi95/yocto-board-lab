@@ -1,0 +1,5 @@
+.venv/
+build*
+layers/*
+!layers/meta-boardfarm
+.kas_shell_history
