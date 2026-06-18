@@ -5,9 +5,9 @@ header:
 
 repos:
   meta-arm:
-    url: "git://git.yoctoproject.org/meta-arm"
-    tag: "yocto-5.0.3"
-    commit: "a81c19915b5b9e71ed394032e9a50fd06919e1cd"
+    url: "https://git.yoctoproject.org/meta-arm"
+    branch: "wrynose"
+    commit: "d3b55902fb9963978be90d6f283296de456b4b63"
     path: "layers/meta-arm"
     layers:
       meta-arm:
