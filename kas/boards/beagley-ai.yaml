@@ -5,99 +5,43 @@ header:
 
 machine: "beagley-ai"
 
-target: tisdk-default-image
+target: arago-base-image
 
 repos:
-
-  # meta-arago:
-  #   url: "https://git.yoctoproject.org/meta-arago"
-  #   branch: "scarthgap"
-  #   commit: "1640df60b0f75722b9e5923a5bfba3767e7d97a8"
-  #   layers:
-  #     meta-arago-distro:
-  #     meta-arago-extras:
-  #     meta-arago-test:
-
-  # meta-qt6:
-  #   url: "https://code.qt.io/yocto/meta-qt6.git"
-  #   branch: "6.9"
-  #   commit: "c7d71f4cece4d1fe3110c945b9bd40ca82960e05"
-
-  # meta-virtualization:
-  #   url: "https://git.yoctoproject.org/meta-virtualization"
-  #   branch: "scarthgap"
-  #   commit: "17ac21e7d7f6f40a87618b22278b63bcfa14dbf2"
-
-  # meta-openembedded:
-  #   url: "https://git.openembedded.org/meta-openembedded"
-  #   branch: "scarthgap"
-  #   commit: "e76bf51a92b41d4cb185fc164ae43a863910ccd1"
-  #   layers:
-  #     meta-networking:
-  #     meta-python:
-  #     meta-oe:
-  #     meta-gnome:
-  #     meta-filesystems:
-  #     meta-multimedia:
-
   meta-lts-mixins:
     url: "https://git.yoctoproject.org/meta-lts-mixins"
-    branch: "scarthgap/rust"
-    commit: "a8046d5ec53b1856169ac795aa87cb0d5db84c04"
+    branch: "wrynose/linux-firmware"
+    commit: "11dcf7de2b3cf74fd11049684903b73206a69df6"
     path: "layers/meta-lts-mixins"
 
-  # meta-ti:
-  #   url: "https://git.yoctoproject.org/meta-ti"
-  #   branch: "scarthgap"
-  #   commit: "ea8c0b1cf1ab8a0b327e3feb1144c1ccf05b8278"
-  #   layers:
-  #     meta-ti-extras:
-  #     meta-beagle:
-  #     meta-ti-bsp:
-
-  # meta-clang:
-  #   url: "https://github.com/kraj/meta-clang"
-  #   branch: "scarthgap"
-  #   commit: "5c602337ea1a80fb7217eeda04e396cf90587dca"
-
-  # meta-tisdk:
-  #   url: "https://git.ti.com/git/ti-sdk-linux/meta-tisdk.git"
-  #   branch: "scarthgap"
-  #   commit: "32482cad2f630892b733c1457b9e9d835b098174"
-  #   layers:
-  #     meta-ti-foundational:
-
-  # meta-edgeai:
-  #   url: "https://git.ti.com/git/edgeai/meta-edgeai.git"
-  #   branch: "scarthgap-next"
-  #   commit: "7d07e25a15632494d6c30efb09d68de1c95f9394"
-
   meta-ti:
-    url: "git://git.yoctoproject.org/meta-ti"
-    branch: "scarthgap"
-    commit: "da28ae30cabd39ebce054ea2e230548d9b9c3322"
+    url: "https://git.yoctoproject.org/meta-ti"
+    branch: "wrynose"
+    commit: "0801af5f5f1fd526fa2dda7309c02f10f43bc072"
     path: "layers/meta-ti"
     layers:
       meta-beagle:
       meta-ti-bsp:
       meta-ti-extras:
+      meta-ti-test:
   meta-arago:
     url: "https://git.yoctoproject.org/meta-arago"
-    branch: "scarthgap"
-    commit: "37040e478fa10d000b3ca3db5853be144a4f8a28"
+    branch: "wrynose"
+    commit: "0e97f60a272300075fe2dcb4190873b19c32663c"
     path: "layers/meta-arago"
     layers:
       meta-arago-distro:
       meta-arago-extras:
-      meta-arago-test:
   meta-clang:
     url: "https://github.com/kraj/meta-clang"
-    branch: "scarthgap"
-    commit: "5c602337ea1a80fb7217eeda04e396cf90587dca"
+    branch: "wrynose"
+    commit: "78c5e12f08198f4f257a9348516d2103cd617c1d"
     path: "layers/meta-clang"
+
   meta-openembedded:
     url: "https://git.openembedded.org/meta-openembedded"
-    branch: "scarthgap"
+    branch: "wrynose"
+    commit: "a43f0d532c399458cae44ce66f3799a220fbb497"
     path: "layers/meta-openembedded"
     layers:
       meta-networking:
@@ -109,12 +53,28 @@ repos:
 
   meta-virtualization:
     url: "https://git.yoctoproject.org/meta-virtualization"
-    branch: "scarthgap"
-    commit: "f92518e20530edfebca45e4170e11460949a5303"
+    branch: "wrynose"
+    commit: "781735b97ae5013cacabbecd38e6da6b510cf3fb"
     path: "layers/meta-virtualization"
 
-  meta-custom:
-    path: "layers/meta-custom"
+  # meta-qt6:
+  #   url: "https://code.qt.io/yocto/meta-qt6.git"
+  #   branch: "6.9"
+  #   commit: "c7d71f4cece4d1fe3110c945b9bd40ca82960e05"
+
+  # meta-edgeai:
+  #   url: "https://git.ti.com/git/edgeai/meta-edgeai.git"
+  #   branch: "scarthgap-next"
+  #   commit: "7d07e25a15632494d6c30efb09d68de1c95f9394"
+
+  # meta-tisdk:
+  #   url: "https://git.ti.com/git/ti-sdk-linux/meta-tisdk.git"
+  #   branch: "wrynose"
+  #   commit: "d121aad521825b605d40fcaad3e218c3fb7c2fd9"
+  #   path: "layers/meta-tisdk"
+  #   layers:
+  #     meta-ti-foundational:
+
 
 local_conf_header:
   oe-layersetup-local-conf-template: |
@@ -223,7 +183,7 @@ local_conf_header:
     # There are other application targets that can be used here too, see
     # meta/classes/image.bbclass and meta/classes/core-image.bbclass for more details.
     # We default to enabling the debugging tweaks.
-    EXTRA_IMAGE_FEATURES = "debug-tweaks"
+    # EXTRA_IMAGE_FEATURES = "debug-tweaks"
 
     #
     # Additional image features
