@@ -42,3 +42,14 @@ kas shell kas/boards/radxa-zero-3w.yaml -c "bitbake -c cleanall core-image-full-
 ```bash
 runqemu qemuarm nographic
 ```
+
+| Done | Board            | Image Name              | Status  | Notes                       |
+|------|------------------|--------------------------|---------|-----------------------------|
+| ✅   | armqemux64       | core-image-full-cmdline | Working | Successfully booted in QEMU |
+| ⬜   | armqemux64       | core-image-minimal      | Planned | Validation pending          |
+| ⬜   | Raspberry Pi 5   | core-image-full-cmdline | Planned | BSP integration pending     |
+| ⬜   | Radxa Zero 3W    | core-image-full-cmdline | Planned | Board support to be added   |
+| ⬜   | BeagleBone Black | core-image-full-cmdline | Planned | BSP evaluation pending      |
+| ⬜   | MilkV Duo S      | core-image-full-cmdline | Planned | Vendor BSP review required  |
+| ⬜   | Radxa Rock 5T    | core-image-full-cmdline | Planned | RK3588 support evaluation   |
+| ⬜   | BeagleY-AI Rev-A | core-image-full-cmdline | Planned | AI validation pending       |
