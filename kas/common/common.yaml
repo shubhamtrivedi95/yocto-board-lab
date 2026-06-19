@@ -100,6 +100,12 @@ local_conf_header:
   enable_root_user: |
     IMAGE_FEATURES += "allow-root-login empty-root-password"
 
+  cra_integration: |
+    # Enable CRA integration
+    INHERIT += "create-spdx-3.0"
+    # INHERIT += "sbom-cve-check"
+    INHERIT += "sbom-cve-check-recipe"
+    INHERIT += "vex"
 # local_conf_header:
 #   kas: |
 #     # Parallelism Options (default to number of cores)
