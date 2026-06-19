@@ -8,12 +8,6 @@ machine: "beagley-ai"
 target: arago-base-image
 
 repos:
-  meta-lts-mixins:
-    url: "https://git.yoctoproject.org/meta-lts-mixins"
-    branch: "wrynose/linux-firmware"
-    commit: "11dcf7de2b3cf74fd11049684903b73206a69df6"
-    path: "layers/meta-lts-mixins"
-
   meta-ti:
     url: "https://git.yoctoproject.org/meta-ti"
     branch: "wrynose"
@@ -32,11 +26,6 @@ repos:
     layers:
       meta-arago-distro:
       meta-arago-extras:
-  meta-clang:
-    url: "https://github.com/kraj/meta-clang"
-    branch: "wrynose"
-    commit: "78c5e12f08198f4f257a9348516d2103cd617c1d"
-    path: "layers/meta-clang"
 
   meta-openembedded:
     url: "https://git.openembedded.org/meta-openembedded"
@@ -56,6 +45,18 @@ repos:
     branch: "wrynose"
     commit: "781735b97ae5013cacabbecd38e6da6b510cf3fb"
     path: "layers/meta-virtualization"
+
+  meta-clang:
+    url: "https://github.com/kraj/meta-clang"
+    branch: "wrynose"
+    commit: "78c5e12f08198f4f257a9348516d2103cd617c1d"
+    path: "layers/meta-clang"
+
+  meta-lts-mixins:
+    url: "https://git.yoctoproject.org/meta-lts-mixins"
+    branch: "wrynose/linux-firmware"
+    commit: "11dcf7de2b3cf74fd11049684903b73206a69df6"
+    path: "layers/meta-lts-mixins"
 
   # meta-qt6:
   #   url: "https://code.qt.io/yocto/meta-qt6.git"
