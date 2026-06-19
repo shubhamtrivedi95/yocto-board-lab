@@ -12,7 +12,7 @@
     "*.conf": "bitbake",
     "*.inc": "bitbake"
   },
-  "bitbake.commandWrapper": "kas shell kas/common/common.yaml -c",
+  "bitbake.commandWrapper": "source .venv/bin/activate && kas shell kas/boards/beagley-ai.yaml -c",
   "bitbake.pathToBitbakeFolder": "${workspaceFolder}/layers/bitbake",
   "bitbake.parseOnSave": false,
   "files.watcherExclude": {
@@ -26,5 +26,9 @@
   ],
   "git.repositoryScanIgnoredFolders": [
     "**/build"
-  ]
+  ],
+  "bitbake.pathToBuildFolder": "${workspaceFolder}/build",
+  "bitbake.shellEnv": {
+    "MYVAR": "myvalue"
+  }
 }
