@@ -27,6 +27,12 @@ repos:
     path: "layers/openembedded-core"
     layers:
       meta:
+  meta-swupdate:
+    url: "https://github.com/sbabic/meta-swupdate.git"
+    branch: "wrynose"
+    commit: "885d8a5739d4fc55298bdafee850f567aaede88d" 
+    path: "layers/meta-swupdate"
+
   meta-boardfarm:
     path: "layers/meta-boardfarm"
 machine: "qemuarm64"
