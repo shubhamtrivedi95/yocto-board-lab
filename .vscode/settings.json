@@ -2,11 +2,13 @@
   "git.enableCommitSigning": false,
   "python.autoComplete.extraPaths": [
     "${workspaceFolder}/layers/openembedded-core/meta/lib",
-    "${workspaceFolder}/layers/bitbake/lib"
+    "${workspaceFolder}/layers/bitbake/lib",
+    "${workspaceFolder}/layers/meta/lib"
   ],
   "python.analysis.extraPaths": [
     "${workspaceFolder}/layers/openembedded-core/meta/lib",
-    "${workspaceFolder}/layers/bitbake/lib"
+    "${workspaceFolder}/layers/bitbake/lib",
+    "${workspaceFolder}/layers/meta/lib"
   ],
   "files.associations": {
     "*.conf": "bitbake",
