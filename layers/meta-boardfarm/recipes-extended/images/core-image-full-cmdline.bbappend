@@ -4,6 +4,7 @@ IMAGE_INSTALL:append = " \
     rt-tests \
     util-linux \
     htop \
+    swupdate \
 "
 QB_DEFAULT_FSTYPE = "ext4"
 IMAGE_INSTALL:append:beagley-ai = " \
