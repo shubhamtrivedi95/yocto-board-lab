@@ -4,7 +4,7 @@ header:
     - kas/common/arm-common.yaml
 
 machine: "beagley-ai"
-
+distro: "arago"
 target: arago-base-image
 
 repos:
