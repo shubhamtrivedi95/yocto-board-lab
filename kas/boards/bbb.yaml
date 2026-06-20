@@ -4,6 +4,6 @@ header:
     - kas/common/common.yaml
 
 machine: "beaglebone-yocto"
-
+distro: "poky"
 target:
   - "core-image-full-cmdline"

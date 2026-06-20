@@ -3,6 +3,6 @@ header:
     includes:
       - kas/common/common.yaml
 machine: "qemuarm"
-
+distro: "poky"
 target:
   - "core-image-full-cmdline"

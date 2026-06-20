@@ -31,8 +31,6 @@ repos:
     path: "layers/meta-boardfarm"
 machine: "qemuarm64"
 
-distro: "poky"
-
 target:
   - core-image-minimal
 

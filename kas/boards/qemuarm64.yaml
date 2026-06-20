@@ -5,6 +5,6 @@ header:
     - kas/common/common.yaml
 
 machine: "qemuarm64"
-
+distro: "poky"
 target:
   - "core-image-full-cmdline"
