@@ -1,0 +1,1 @@
+SRC_URI:beagley-ai = "git://git.ti.com/cgit/cc33xx-wlan/cc33xx-fw;protocol=https;branch=master"
