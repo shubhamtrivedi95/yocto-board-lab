@@ -86,4 +86,5 @@ local_conf_header:
     # but we chose xterm
     TERMCMD = "${XTERM_TERMCMD}"
     TERMCMDRUN = "${XTERM_TERMCMDRUN}"
-    ARAGO_EXTRA:pn-packagegroup-arago-base:remove = "dropbear"
+    ARAGO_EXTRA:remove:pn-packagegroup-arago-base = "dropbear"
+    PREFERRED_PROVIDER_virtual/bootloader = "u-boot-ti-staging"
