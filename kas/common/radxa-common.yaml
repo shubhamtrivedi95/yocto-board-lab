@@ -1,0 +1,11 @@
+header:
+  version: 14
+  includes:
+    - kas/common/arm-common.yaml
+
+repos:
+  meta-rockchip:
+    url: "https://git.yoctoproject.org/meta-rockchip"
+    branch: "wrynose"
+    commit: "9d02575bfd9ca5e87c394f593f2bbdbdee914d4e"
+    path: "layers/meta-rockchip"
