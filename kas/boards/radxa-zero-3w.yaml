@@ -1,15 +1,6 @@
 header:
   version: 14
   includes:
-    - kas/common/arm-common.yaml
+    - kas/common/radxa-common.yaml
 
 machine: "radxa-zero-3w"
-
-repos:
-  meta-rockchip:
-    url: "git://git.yoctoproject.org/meta-rockchip"
-    branch: "scarthgap"
-    commit: "9690180b7e9953361958c962b80d891eda8c1028"
-    path: "layers/meta-rockchip"
-  # meta-radxa-zero-3w:
-  #   path: "layers/meta-radxa-zero-3w"
