@@ -32,6 +32,13 @@ repos:
     branch: "wrynose"
     commit: "885d8a5739d4fc55298bdafee850f567aaede88d" 
     path: "layers/meta-swupdate"
+  meta-openembedded:
+    url: "https://git.openembedded.org/meta-openembedded"
+    branch: "wrynose"
+    commit: "a43f0d532c399458cae44ce66f3799a220fbb497"
+    path: "layers/meta-openembedded"
+    layers:
+      meta-oe:
 
   meta-boardfarm:
     path: "layers/meta-boardfarm"
@@ -109,6 +116,11 @@ local_conf_header:
     INHERIT += "create-spdx-3.0"
     INHERIT += "sbom-cve-check-recipe"
     INHERIT += "vex"
+
+  recipe_append_management: |
+    # Exclude certain recipes from being appended
+    BBMASK:append:raspberrypi5 = " layers/meta-boardfarm/recipes-kernel/linux/linux-bb.org_6.12.bbappend"
+    BBMASK:append:raspberrypi5 = " layers/meta-boardfarm/recipes-bsp/cc33xx-fw/cc33xx-fw_git.bbappend"
 
 bblayers_conf_header:
   kas: |
