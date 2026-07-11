@@ -1,55 +1,123 @@
 # yocto-board-lab
-This Repository is created to support the multiple Embedded Linux board for Yocto Builds
 
-## Available Boards
+A Yocto project repository for building Embedded Linux images across multiple development boards.
 
-1. Beaglebone Black
-2. Beagle-Y AI
+## Overview
 
-## Install Pre-requisite
+This repository provides Yocto build support, board metadata, and example commands for:
+
+- BeagleBone Black
+- BeagleY-AI
+- Raspberry Pi 5
+
+It also includes work-in-progress support for additional boards and planned BSP integrations.
+
+## Supported Boards
+
+- BeagleBone Black
+- BeagleY-AI
+- Raspberry Pi 5
+
+## Upcoming Boards
+
+- NVIDIA Jetson Orin Nano DevKit
+- FRDM-iMX8MP
+- Radxa Rock 5T
+- Radxa Zero 3W
+- MilkV Duo S
+
+## Prerequisites
+
+Install the required packages on Ubuntu/Debian:
 
 ```bash
 sudo apt update
-sudo apt-get install build-essential chrpath cpio debianutils diffstat file gawk gcc git iputils-ping libacl1 libcrypt-dev locales python3 python3-git python3-jinja2 python3-pexpect python3-pip python3-subunit socat texinfo unzip wget xz-utils zstd python3-venv
-locale --all-locales | grep en_US.utf8
-pip3 install pip --upgrade
-python3 -m venv .venv
-pip3 install -r requirements.txt
-sudo locale-gen en_US.UTF-8
+sudo apt install -y build-essential chrpath cpio debianutils diffstat file gawk gcc git iputils-ping libacl1 libcrypt-dev locales python3 python3-git python3-jinja2 python3-pexpect python3-pip python3-subunit socat texinfo unzip wget xz-utils zstd python3-venv
 ```
 
-## Build armqemu machine
+Set up locale support:
+
 ```bash
-kas shell kas/boards/armqemu.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+sudo locale-gen en_US.UTF-8
+locale --all-locales | grep en_US.utf8
 ```
 
-## Build bbb machine
+Create and activate the Python virtual environment:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+## Build Instructions
+
+Use `kas shell` to enter the build environment and run `bitbake`.
+
+### BeagleBone Black
+
 ```bash
 kas shell kas/boards/bbb.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 ```
 
-## Build beagley-ai machine
+### BeagleY-AI
+
 ```bash
-kas shell kas/boards/beagley-ai.yaml -c "bitbake -c cleanall tisdk-base-image && bitbake tisdk-base-image"
+kas shell kas/boards/beagley-ai.yaml -c "bitbake -c cleanall arago-base-image && bitbake arago-base-image"
 ```
 
-## Build radxa-zero-3w machine
+### Raspberry Pi 5
+
+```bash
+kas shell kas/boards/rpi5.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+```
+
+### Radxa Zero 3W
+
 ```bash
 kas shell kas/boards/radxa-zero-3w.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 ```
 
-## Run the qemu image
+### Arm QEMU (armqemu)
+
 ```bash
-runqemu qemuarm nographic
+kas shell kas/boards/armqemu.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 ```
 
-| Done | Board            | Image Name              | Status  | Notes                       |
-|------|------------------|--------------------------|---------|-----------------------------|
-| ✅   | armqemux64       | core-image-full-cmdline | Working | Successfully booted in QEMU |
-| ⬜   | armqemux64       | core-image-minimal      | Planned | Validation pending          |
-| ⬜   | Raspberry Pi 5   | core-image-full-cmdline | Planned | BSP integration pending     |
-| ⬜   | Radxa Zero 3W    | core-image-full-cmdline | Planned | Board support to be added   |
-| ⬜   | BeagleBone Black | core-image-full-cmdline | Planned | BSP evaluation pending      |
-| ⬜   | MilkV Duo S      | core-image-full-cmdline | Planned | Vendor BSP review required  |
-| ⬜   | Radxa Rock 5T    | core-image-full-cmdline | Planned | RK3588 support evaluation   |
-| ⬜   | BeagleY-AI Rev-A | core-image-full-cmdline | Planned | AI validation pending       |
+## Running QEMU
+
+To boot the QEMU-built image:
+
+```bash
+kas shell kas/boards/armqemu.yaml -c "runqemu qemuarm nographic"
+```
+
+## Status Matrix
+
+| Status | Board                          | Image                     | Notes                                     |
+|--------|--------------------------------|---------------------------|-------------------------------------------|
+| ✅     | armqemux64                     | core-image-full-cmdline   | Successfully booted in QEMU               |
+| ⬜     | armqemux64                     | core-image-minimal        | Validation pending                        |
+| ✅     | Raspberry Pi 5                 | core-image-full-cmdline   | Successfully booted                        |
+| ✅     | BeagleBone Black               | core-image-full-cmdline   | Successfully booted                        |
+| ✅     | BeagleY-AI Rev-A               | core-image-full-cmdline   | Successfully booted, AI validation pending |
+| ⬜     | Radxa Zero 3W                  | core-image-full-cmdline   | Board support in progress                 |
+| ⬜     | Radxa Rock 5T                  | core-image-full-cmdline   | RK3588 support evaluation                 |
+| ⬜     | MilkV Duo S                    | core-image-full-cmdline   | Vendor BSP review required                |
+| ⬜     | NVIDIA Jetson Orin Nano DevKit | core-image-full-cmdline   | BSP integration and validation pending    |
+
+## Notes
+
+- Update `kas/boards/*.yaml` if you add or modify board support.
+- Use `bitbake -c cleanall <image>` to ensure clean builds after recipe or layer changes.
+- If you encounter missing dependencies, verify the current Yocto and KAS documentation for your host distribution.
+
+## Contributing
+
+Contributions are welcome. Please open issues or provide patches for:
+
+- new board support
+- BSP updates
+- image configuration improvements
+- build and runtime troubleshooting
