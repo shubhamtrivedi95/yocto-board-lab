@@ -3,6 +3,8 @@
 This Repository is created to support the multiple Embedded Linux board for Yocto Builds.
 To optimize build times, this project heavily relies on a pre-populated `downloads` directory and `sstate-cache`.
 
+> Note: hosting for the `yocto_data.zip` archive is still pending, so this document is currently incomplete and some cache setup instructions may change.
+
 ## 📌 Prerequisites & Common Setup
 
 Before proceeding with any of the build workflows, you must prepare your host environment. To significantly reduce build times, all three workflows bypass downloading sources and recompiling unchanged components by reusing a pre-populated Yocto cache.
