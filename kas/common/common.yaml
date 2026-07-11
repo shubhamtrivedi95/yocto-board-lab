@@ -119,8 +119,8 @@ local_conf_header:
 
   recipe_append_management: |
     # Exclude certain recipes from being appended
-    BBMASK:append:raspberrypi5 = " layers/meta-boardfarm/recipes-kernel/linux/linux-bb.org_6.12.bbappend"
-    BBMASK:append:raspberrypi5 = " layers/meta-boardfarm/recipes-bsp/cc33xx-fw/cc33xx-fw_git.bbappend"
+    BBMASK:append = " layers/meta-boardfarm/recipes-kernel/linux/linux-bb.org_6.12.bbappend"
+    BBMASK:append = " layers/meta-boardfarm/recipes-bsp/cc33xx-fw/cc33xx-fw_git.bbappend"
 
 bblayers_conf_header:
   kas: |
