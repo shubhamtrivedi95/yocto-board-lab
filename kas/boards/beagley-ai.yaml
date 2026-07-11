@@ -88,3 +88,5 @@ local_conf_header:
     TERMCMDRUN = "${XTERM_TERMCMDRUN}"
     ARAGO_EXTRA:remove:pn-packagegroup-arago-base = "dropbear"
     PREFERRED_PROVIDER_virtual/bootloader = "u-boot-ti-staging"
+    BBMASK:remove = " layers/meta-boardfarm/recipes-kernel/linux/linux-bb.org_6.12.bbappend"
+    BBMASK:remove = " layers/meta-boardfarm/recipes-bsp/cc33xx-fw/cc33xx-fw_git.bbappend"
