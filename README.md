@@ -105,7 +105,7 @@ kas shell kas/boards/armqemu.yaml -c "runqemu qemuarm nographic"
 | ⬜     | Radxa Zero 3W                  | core-image-full-cmdline   | Board support in progress                 |
 | ⬜     | Radxa Rock 5T                  | core-image-full-cmdline   | RK3588 support evaluation                 |
 | ⬜     | MilkV Duo S                    | core-image-full-cmdline   | Vendor BSP review required                |
-| ⬜     | NVIDIA Jetson Orin Nano DevKit | core-image-full-cmdline   | BSP integration and validation pending    |
+| ⬜     | NVIDIA Jetson Orin Nano DevKit | tegra-minimal-initramfs   | BSP integration and validation pending    |
 
 ## Notes
 
