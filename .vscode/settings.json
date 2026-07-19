@@ -14,7 +14,7 @@
     "*.conf": "bitbake",
     "*.inc": "bitbake"
   },
-  "bitbake.commandWrapper": "source .venv/bin/activate && kas shell kas/boards/beagley-ai.yaml -c",
+  "bitbake.commandWrapper": "${workspaceFolder}/.venv/bin/kas shell kas/boards/beagley-ai.yaml -c",
   "bitbake.pathToBitbakeFolder": "${workspaceFolder}/layers/bitbake",
   "bitbake.parseOnSave": false,
   "files.watcherExclude": {
