@@ -1,4 +1,3 @@
-```md
 # Raspberry Pi 5 Board Documentation
 
 ## 1. Overview
@@ -37,5 +36,4 @@
 - Vendor documentation: Raspberry Pi documentation and booting guide
 - Board support files: kas/boards/rpi5.yaml, layers/meta-raspberrypi
 - Related notes / links: Repository build instructions in README.md
-```
 

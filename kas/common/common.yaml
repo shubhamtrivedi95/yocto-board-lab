@@ -122,6 +122,12 @@ local_conf_header:
     BBMASK:append = " layers/meta-boardfarm/recipes-kernel/linux/linux-bb.org_6.12.bbappend"
     BBMASK:append = " layers/meta-boardfarm/recipes-bsp/cc33xx-fw/cc33xx-fw_git.bbappend"
 
+  # deploy_directories: |
+  #   # Specify directories to deploy
+  #   DEPLOY_DIR = "${TOPDIR}/deploy"
+  #   DEPLOY_DIR_IMAGE = "${DEPLOY_DIR}/images/${MACHINE}"
+  #   CVE_CHECK_SUMMARY_DIR = "${DEPLOY_DIR}/cve-check-summary"
+    
 bblayers_conf_header:
   kas: |
     # Additional layers can be added here

@@ -1,4 +1,3 @@
-```md
 # NVIDIA Jetson Orin Nano Board Documentation
 
 ## 1. Overview
@@ -37,5 +36,4 @@
 - Vendor documentation: NVIDIA Jetson Orin Nano developer documentation
 - Board support files: kas/boards/jetson-orin-nano.yaml, layers/meta-tegra, layers/tegra-demo-distro
 - Related notes / links: Repository build instructions in README.md
-```
 

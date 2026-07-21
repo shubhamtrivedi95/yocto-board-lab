@@ -1,4 +1,3 @@
-```md
 # FRDM i.MX8M Plus Board Documentation
 
 ## 1. Overview
@@ -37,5 +36,5 @@
 - Vendor documentation: [NXP FRDM i.MX8M Plus quick reference and board documentation](https://www.nxp.com/docs/en/quick-reference-guide/FRDMIMX8MPLUSQSG.pdf)
 - Board support files: kas/boards/frdm-imx8mp.yaml, layers/meta-boardfarm/conf/machine/imx8mpfrdm.conf, layers/meta-freescale
 - Related notes / links: Repository build instructions in README.md and validation logs in Validation/FRDM-i.MX8MP
-```
+
 

@@ -1,4 +1,3 @@
-```md
 # QEMU ARM64 Board Documentation
 
 ## 1. Overview
@@ -37,5 +36,4 @@
 - Vendor documentation: QEMU documentation
 - Board support files: kas/boards/qemuarm64.yaml
 - Related notes / links: Repository build instructions in README.md
-```
 
