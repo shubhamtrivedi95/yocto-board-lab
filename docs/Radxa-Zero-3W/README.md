@@ -1,4 +1,3 @@
-```md
 # Radxa Zero 3W Board Documentation
 
 ## 1. Overview
@@ -37,5 +36,4 @@
 - Vendor documentation: Radxa Zero 3W documentation
 - Board support files: kas/boards/radxa-zero-3w.yaml, kas/common/radxa-common.yaml
 - Related notes / links: Repository build instructions in README.md
-```
 

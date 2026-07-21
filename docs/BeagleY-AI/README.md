@@ -1,4 +1,3 @@
-```md
 # BeagleY-AI Board Documentation
 
 ## 1. Overview
@@ -37,5 +36,4 @@
 - Vendor documentation: BeagleBoard.org BeagleY-AI documentation and TI BSP references
 - Board support files: kas/boards/beagley-ai.yaml, layers/meta-ti/meta-beagle/conf/machine/beagley-ai.conf, layers/meta-arago
 - Related notes / links: Repository build instructions in README.md
-```
 

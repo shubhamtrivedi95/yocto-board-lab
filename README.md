@@ -55,16 +55,16 @@ pip install -r requirements.txt
 
 Board-specific documentation for supported and in-progress targets is available under the docs folder:
 
-- [docs/Beaglebone-black/README.md](docs/Beaglebone-black/README.md)
-- [docs/BeagleY-AI/README.md](docs/BeagleY-AI/README.md)
-- [docs/FRDM-i.MX8MP/README.md](docs/FRDM-i.MX8MP/README.md)
-- [docs/Jetson-Orin-Nano/README.md](docs/Jetson-Orin-Nano/README.md)
-- [docs/MilkV-Duo-S/README.md](docs/MilkV-Duo-S/README.md)
-- [docs/Qemu-arm/README.md](docs/Qemu-arm/README.md)
-- [docs/Qemu-arm64/README.md](docs/Qemu-arm64/README.md)
-- [docs/Radxa-Rock-5T/README.md](docs/Radxa-Rock-5T/README.md)
-- [docs/Radxa-Zero-3W/README.md](docs/Radxa-Zero-3W/README.md)
-- [docs/Raspberry-Pi-5/README.md](docs/Raspberry-Pi-5/README.md)
+- [Beaglebone-black](docs/Beaglebone-black/README.md)
+- [BeagleY-AI](docs/BeagleY-AI/README.md)
+- [FRDM-i.MX8MP](docs/FRDM-i.MX8MP/README.md)
+- [Jetson-Orin-Nano](docs/Jetson-Orin-Nano/README.md)
+- [MilkV-Duo-S](docs/MilkV-Duo-S/README.md)
+- [Qemu-arm](docs/Qemu-arm/README.md)
+- [Qemu-arm64](docs/Qemu-arm64/README.md)
+- [Radxa-Rock-5T](docs/Radxa-Rock-5T/README.md)
+- [Radxa-Zero-3W](docs/Radxa-Zero-3W/README.md)
+- [Raspberry-Pi-5](docs/Raspberry-Pi-5/README.md)
 
 ## Build Instructions
 

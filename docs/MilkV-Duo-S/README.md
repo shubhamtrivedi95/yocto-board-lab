@@ -1,4 +1,3 @@
-```md
 # MilkV Duo S Board Documentation
 
 ## 1. Overview
@@ -37,5 +36,5 @@
 - Vendor documentation: Milk-V Duo S product documentation
 - Board support files: kas/boards/milkv-duo-s.yaml
 - Related notes / links: Repository build instructions in README.md
-```
+
 

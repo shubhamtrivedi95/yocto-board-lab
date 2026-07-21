@@ -1,4 +1,3 @@
-```md
 # Radxa Rock 5T Board Documentation
 
 ## 1. Overview
@@ -37,5 +36,4 @@
 - Vendor documentation: Radxa Rock 5T documentation
 - Board support files: kas/boards/radxa-rock-5t.yaml, kas/common/radxa-common.yaml
 - Related notes / links: Repository build instructions in README.md
-```
 
