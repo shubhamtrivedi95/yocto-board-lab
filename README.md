@@ -17,11 +17,11 @@ It also includes work-in-progress support for additional boards and planned BSP 
 - BeagleBone Black
 - BeagleY-AI
 - Raspberry Pi 5
+- FRDM-iMX8MP
 
 ## Upcoming Boards
 
 - NVIDIA Jetson Orin Nano DevKit
-- FRDM-iMX8MP
 - Radxa Rock 5T
 - Radxa Zero 3W
 - MilkV Duo S
@@ -32,7 +32,7 @@ Install the required packages on Ubuntu/Debian:
 
 ```bash
 sudo apt update
-sudo apt install -y build-essential chrpath cpio debianutils diffstat file gawk gcc git iputils-ping libacl1 libcrypt-dev locales python3 python3-git python3-jinja2 python3-pexpect python3-pip python3-subunit socat texinfo unzip wget xz-utils zstd python3-venv
+sudo apt install -y build-essential chrpath cpio debianutils diffstat file gawk gcc git iputils-ping libacl1 libcrypt-dev locales python3 python3-git python3-jinja2 python3-pexpect python3-pip python3-subunit socat texinfo unzip wget xz-utils zstd python3-venv lz4
 ```
 
 Set up locale support:
@@ -50,6 +50,21 @@ source .venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
+
+## Board Documentation
+
+Board-specific documentation for supported and in-progress targets is available under the docs folder:
+
+- [docs/Beaglebone-black/README.md](docs/Beaglebone-black/README.md)
+- [docs/BeagleY-AI/README.md](docs/BeagleY-AI/README.md)
+- [docs/FRDM-i.MX8MP/README.md](docs/FRDM-i.MX8MP/README.md)
+- [docs/Jetson-Orin-Nano/README.md](docs/Jetson-Orin-Nano/README.md)
+- [docs/MilkV-Duo-S/README.md](docs/MilkV-Duo-S/README.md)
+- [docs/Qemu-arm/README.md](docs/Qemu-arm/README.md)
+- [docs/Qemu-arm64/README.md](docs/Qemu-arm64/README.md)
+- [docs/Radxa-Rock-5T/README.md](docs/Radxa-Rock-5T/README.md)
+- [docs/Radxa-Zero-3W/README.md](docs/Radxa-Zero-3W/README.md)
+- [docs/Raspberry-Pi-5/README.md](docs/Raspberry-Pi-5/README.md)
 
 ## Build Instructions
 
@@ -79,10 +94,22 @@ kas shell kas/boards/rpi5.yaml -c "bitbake -c cleanall core-image-full-cmdline &
 kas shell kas/boards/radxa-zero-3w.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 ```
 
-### Arm QEMU (armqemu)
+### FRDM-iMX8M Plus
 
 ```bash
-kas shell kas/boards/armqemu.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+kas shell kas/boards/frdm-imx8mp.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+```
+
+### Arm QEMU (qemuarm)
+
+```bash
+kas shell kas/boards/qemuarm.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+```
+
+### Arm64 QEMU (qemuarm64)
+
+```bash
+kas shell kas/boards/qemuarm64.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 ```
 
 ## Running QEMU
@@ -97,15 +124,16 @@ kas shell kas/boards/armqemu.yaml -c "runqemu qemuarm nographic"
 
 | Status | Board                          | Image                     | Notes                                     |
 |--------|--------------------------------|---------------------------|-------------------------------------------|
-| ✅     | armqemux64                     | core-image-full-cmdline   | Successfully booted in QEMU               |
-| ⬜     | armqemux64                     | core-image-minimal        | Validation pending                        |
-| ✅     | Raspberry Pi 5                 | core-image-full-cmdline   | Successfully booted                        |
-| ✅     | BeagleBone Black               | core-image-full-cmdline   | Successfully booted                        |
-| ✅     | BeagleY-AI Rev-A               | core-image-full-cmdline   | Successfully booted, AI validation pending |
+| ✅     | qemuarm                        | core-image-full-cmdline   | Successfully booted in QEMU               |
+| ✅     | qemuarm64                      | core-image-full-cmdline   | Successfully booted in QEMU               |
+| ✅     | Raspberry Pi 5                 | core-image-full-cmdline   | Successfully booted                       |
+| ✅     | FRDM-iMX8MP                    | core-image-full-cmdline   | Successfully booted, AI Validation pending|
+| ✅     | BeagleBone Black               | core-image-full-cmdline   | Successfully booted                       |
+| ✅     | BeagleY-AI Rev-A               | arago-base-image          | Successfully booted, AI validation pending|
 | ⬜     | Radxa Zero 3W                  | core-image-full-cmdline   | Board support in progress                 |
 | ⬜     | Radxa Rock 5T                  | core-image-full-cmdline   | RK3588 support evaluation                 |
 | ⬜     | MilkV Duo S                    | core-image-full-cmdline   | Vendor BSP review required                |
-| ⬜     | NVIDIA Jetson Orin Nano DevKit | tegra-minimal-initramfs   | BSP integration and validation pending    |
+| ⬜     | NVIDIA Jetson Orin Nano DevKit | demo-image-base   | Image build complete successfully, boot up is pending    |
 
 ## Notes
 
