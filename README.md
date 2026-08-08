@@ -130,8 +130,8 @@ To boot the QEMU-built image:
 
 | Status | Board                          | Image                     | Notes                                     |
 |--------|--------------------------------|---------------------------|-------------------------------------------|
-| ⬜     | qemuarm                        | core-image-full-cmdline   | Successfully boots in QEMU when built with `kas`; currently fails to boot when built with `kas-container`.  |
-| ⬜     | qemuarm64                      | core-image-full-cmdline   | Successfully boots in QEMU when built with `kas`; currently fails to boot when built with `kas-container`.  |
+| ⬜     | qemuarm                        | core-image-full-cmdline   | Successfully boots in QEMU when built with `kas`; currently fails to boot when built with `run-kas.sh`.  |
+| ⬜     | qemuarm64                      | core-image-full-cmdline   | Successfully boots in QEMU when built with `kas`; currently fails to boot when built with `run-kas.sh`.  |
 | ✅     | Raspberry Pi 5                 | core-image-full-cmdline   | Successfully booted                       |
 | ✅     | FRDM-iMX8MP                    | core-image-full-cmdline   | Successfully booted, AI Validation pending|
 | ✅     | BeagleBone Black               | core-image-full-cmdline   | Successfully booted                       |
