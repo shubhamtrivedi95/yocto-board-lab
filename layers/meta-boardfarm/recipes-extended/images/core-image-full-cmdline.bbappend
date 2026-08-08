@@ -23,3 +23,6 @@ IMAGE_INSTALL:append:beaglebone-yocto:imx8mpfrdm = " \
 "
 
 IMAGE_INSTALL:append = " e2fsprogs-resize2fs"
+
+IMAGE_FSTYPES:remove:qemuarm = "wic wic.zst"
+IMAGE_FSTYPES:remove:qemuarm64 = "wic wic.zst"
