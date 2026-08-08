@@ -17,7 +17,7 @@
 ## 3. Yocto / Build Setup
 - Machine name: qemuarm64
 - Layers used: Shared Yocto layers from common.yaml
-- Build command: kas shell kas/boards/qemuarm64.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+- Build command: ./run-kas.sh shell kas/boards/qemuarm64.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 - Notes / custom configuration: Uses the Poky distro and the standard QEMU ARM64 machine definition
 
 ## 4. Flashing and Booting

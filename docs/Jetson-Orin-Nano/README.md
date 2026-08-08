@@ -17,7 +17,7 @@
 ## 3. Yocto / Build Setup
 - Machine name: jetson-orin-nano-devkit
 - Layers used: meta-tegra, tegra-demo-distro, meta-tegra-community, meta-openembedded
-- Build command: kas shell kas/boards/jetson-orin-nano.yaml -c "bitbake demo-image-base"
+- Build command: ./run-kas.sh shell kas/boards/jetson-orin-nano.yaml -c "bitbake demo-image-base"
 - Notes / custom configuration: Uses the tegrademo distro and the shared tegra-specific local configuration
 
 ## 4. Flashing and Booting
