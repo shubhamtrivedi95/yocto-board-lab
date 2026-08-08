@@ -1,0 +1,19 @@
+# Radxa ROCK 5T / RK3588
+# GPT image matching Radxa OS eMMC layout
+
+bootloader --ptable gpt
+
+# Rockchip DDR firmware + U-Boot SPL
+part --source rawcopy --sourceparams="file=idbloader.img" --offset 32K --no-table
+
+# U-Boot FIT: BL31 + U-Boot + U-Boot DTB
+part --source rawcopy --sourceparams="file=u-boot.itb" --offset 8M --no-table
+
+# Radxa config partition: 16 MiB
+part --source empty --fstype=vfat --label config --part-name primary --size 16M --align 16384
+
+# EFI partition: 300 MiB
+part --source empty --fstype=vfat --label efi --part-name primary --size 300M --align 16384
+
+# Yocto root filesystem
+part / --source rootfs --fstype=ext4 --label rootfs --part-name rootfsA --align 2048
