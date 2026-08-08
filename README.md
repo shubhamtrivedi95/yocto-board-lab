@@ -18,12 +18,12 @@ It also includes work-in-progress support for additional boards and planned BSP 
 - BeagleY-AI
 - Raspberry Pi 5
 - FRDM-iMX8MP
+- Radxa Zero 3W
 
 ## Upcoming Boards
 
-- NVIDIA Jetson Orin Nano DevKit
+- Nvidia Jetson Orin Nano DevKit/Nvidia Jeston Orin Nano Module 8GB
 - Radxa Rock 5T
-- Radxa Zero 3W
 - MilkV Duo S
 
 ## Prerequisites
@@ -32,23 +32,29 @@ Install the required packages on Ubuntu/Debian:
 
 ```bash
 sudo apt update
-sudo apt install -y build-essential chrpath cpio debianutils diffstat file gawk gcc git iputils-ping libacl1 libcrypt-dev locales python3 python3-git python3-jinja2 python3-pexpect python3-pip python3-subunit socat texinfo unzip wget xz-utils zstd python3-venv lz4
+sudo apt install -y python3 python3-pip python3-venv docker.io containerd bmap-tools
 ```
 
-Set up locale support:
+Validate docker support:
+
+### Start the docker service
 
 ```bash
-sudo locale-gen en_US.UTF-8
-locale --all-locales | grep en_US.utf8
+sudo systemctl start docker
 ```
 
-Create and activate the Python virtual environment:
+### Add current user to the docker group
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install --upgrade pip
-pip install -r requirements.txt
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+```
+
+### Run the hello world docker image
+
+```bash
+docker run hello-world
 ```
 
 ## Board Documentation
@@ -68,48 +74,48 @@ Board-specific documentation for supported and in-progress targets is available 
 
 ## Build Instructions
 
-Use `kas shell` to enter the build environment and run `bitbake`.
+Use `./run-kas.sh shell <kas-file-path>` to enter the build environment and run `bitbake`.
 
 ### BeagleBone Black
 
 ```bash
-kas shell kas/boards/bbb.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+./run-kas.sh shell kas/boards/bbb.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 ```
 
 ### BeagleY-AI
 
 ```bash
-kas shell kas/boards/beagley-ai.yaml -c "bitbake -c cleanall arago-base-image && bitbake arago-base-image"
+./run-kas.sh shell kas/boards/beagley-ai.yaml -c "bitbake -c cleanall arago-base-image && bitbake arago-base-image"
 ```
 
 ### Raspberry Pi 5
 
 ```bash
-kas shell kas/boards/rpi5.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+./run-kas.sh shell kas/boards/rpi5.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 ```
 
 ### Radxa Zero 3W
 
 ```bash
-kas shell kas/boards/radxa-zero-3w.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+./run-kas.sh shell kas/boards/radxa-zero-3w.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 ```
 
 ### FRDM-iMX8M Plus
 
 ```bash
-kas shell kas/boards/frdm-imx8mp.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+./run-kas.sh shell kas/boards/frdm-imx8mp.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 ```
 
 ### Arm QEMU (qemuarm)
 
 ```bash
-kas shell kas/boards/qemuarm.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+./run-kas.sh shell kas/boards/qemuarm.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 ```
 
 ### Arm64 QEMU (qemuarm64)
 
 ```bash
-kas shell kas/boards/qemuarm64.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+./run-kas.sh shell kas/boards/qemuarm64.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 ```
 
 ## Running QEMU
@@ -117,20 +123,20 @@ kas shell kas/boards/qemuarm64.yaml -c "bitbake -c cleanall core-image-full-cmdl
 To boot the QEMU-built image:
 
 ```bash
-kas shell kas/boards/armqemu.yaml -c "runqemu qemuarm nographic"
+./run-kas.sh shell kas/boards/armqemu.yaml -c "runqemu qemuarm nographic"
 ```
 
 ## Status Matrix
 
 | Status | Board                          | Image                     | Notes                                     |
 |--------|--------------------------------|---------------------------|-------------------------------------------|
-| ✅     | qemuarm                        | core-image-full-cmdline   | Successfully booted in QEMU               |
-| ✅     | qemuarm64                      | core-image-full-cmdline   | Successfully booted in QEMU               |
+| ⬜     | qemuarm                        | core-image-full-cmdline   | Successfully boots in QEMU when built with `kas`; currently fails to boot when built with `run-kas.sh`.  |
+| ⬜     | qemuarm64                      | core-image-full-cmdline   | Successfully boots in QEMU when built with `kas`; currently fails to boot when built with `run-kas.sh`.  |
 | ✅     | Raspberry Pi 5                 | core-image-full-cmdline   | Successfully booted                       |
 | ✅     | FRDM-iMX8MP                    | core-image-full-cmdline   | Successfully booted, AI Validation pending|
 | ✅     | BeagleBone Black               | core-image-full-cmdline   | Successfully booted                       |
 | ✅     | BeagleY-AI Rev-A               | arago-base-image          | Successfully booted, AI validation pending|
-| ⬜     | Radxa Zero 3W                  | core-image-full-cmdline   | Board support in progress                 |
+| ✅     | Radxa Zero 3W                  | core-image-full-cmdline   | Successfully booted                 |
 | ⬜     | Radxa Rock 5T                  | core-image-full-cmdline   | RK3588 support evaluation                 |
 | ⬜     | MilkV Duo S                    | core-image-full-cmdline   | Vendor BSP review required                |
 | ⬜     | NVIDIA Jetson Orin Nano DevKit | demo-image-base   | Image build complete successfully, boot up is pending    |
@@ -140,6 +146,51 @@ kas shell kas/boards/armqemu.yaml -c "runqemu qemuarm nographic"
 - Update `kas/boards/*.yaml` if you add or modify board support.
 - Use `bitbake -c cleanall <image>` to ensure clean builds after recipe or layer changes.
 - If you encounter missing dependencies, verify the current Yocto and KAS documentation for your host distribution.
+
+## Using `run-kas.sh` with shared downloads and sstate-cache
+
+The wrapper script will create a Python virtual environment in `.venv` and install `kas==5.4` automatically if needed. It forwards the arguments after `--` directly to `kas-container`.
+
+- `--shared-dir <directory>` mounts the host directory at `/builder/yocto_data` inside the container.
+- `BUILD_TYPE=normal` is the default mode and does not require `--shared-dir` unless you want to reuse or persist caches on the host.
+- `BUILD_TYPE=master` requires `--shared-dir` and is used when you want the container to read from and write to a host-side shared `downloads`/`sstate-cache` directory.
+
+### Example: use existing pre-fetched downloads and sstate-cache
+
+If you already have the host cache in `$HOME/yocto/yocto_data`, run:
+
+```bash
+./run-kas.sh --shared-dir "$HOME/yocto/yocto_data" -- shell kas/boards/bbb.yaml
+```
+
+This mounts the existing host cache into the container so the build can reuse it.
+
+### Example: populate the shared cache directory from the container
+
+If you want the build to populate or update the shared host cache, run:
+
+```bash
+BUILD_TYPE="master" ./run-kas.sh --shared-dir "$HOME/yocto/yocto_data" -- shell kas/boards/bbb.yaml
+```
+
+`BUILD_TYPE=master` makes the wrapper enforce the shared directory requirement and enables the build environment to persist downloads and `sstate-cache` to the host path.
+
+## Inspect a generated root filesystem image
+
+1. `sudo mkdir -p /mnt/image/`  
+   Create the mount point directory as root, including parent directories if needed.
+
+2. `pushd build/boardfarm/images/radxa-zero-3w`  
+   Change into the image output directory and save the previous location.
+
+3. `sudo mount -o loop core-image-full-cmdline-radxa-zero-3w.rootfs.ext4 /mnt/image/`  
+   Mount the `.ext4` rootfs image file to image using a loopback device.
+
+4. `ls -al /mnt/image`  
+   List the mounted filesystem contents in long format, including hidden files.
+
+5. `popd`  
+   Return to the original directory saved by `pushd`.
 
 ## Contributing
 

@@ -56,9 +56,8 @@ local_conf_header:
   systemd: |
     INIT_MANAGER = "systemd"
 
-  # reduce_dispace: |
-  #   # IMAGE_FEATURES += "rm_work"
-  #   INHERIT += "rm_work"
+  reduce_disk_usage: |
+    INHERIT += "rm_work"
 
 
   parallel_builds: |
@@ -93,9 +92,9 @@ local_conf_header:
     BUILD_REPRODUCIBLE_BINARIES = "1"
     BUILD_TYPE ?= "normal"
     OVERRIDES .= ":${BUILD_TYPE}"
-    MIRROR_DATA_PATH ?= "${HOME}/yocto/yocto_data"
+    MIRROR_DATA_PATH ?= "${HOME}/yocto_data"
     # CONF_VERSION = "1"
-    INHERIT += "${@ 'own-mirrors' if d.getVar('BUILD_TYPE', True) == 'normal' else ''}"
+    INHERIT += "${@ 'own-mirrors' if d.getVar('BUILD_TYPE', True) == 'normal' and os.path.exists(d.getVar('MIRROR_DATA_PATH')) else ''}"
     # Use local source mirror first
     SOURCE_MIRROR_URL:normal = "file:///${MIRROR_DATA_PATH}/downloads/"
     # Check mirror before rebuilding
@@ -121,13 +120,19 @@ local_conf_header:
     # Exclude certain recipes from being appended
     BBMASK:append = " layers/meta-boardfarm/recipes-kernel/linux/linux-bb.org_6.12.bbappend"
     BBMASK:append = " layers/meta-boardfarm/recipes-bsp/cc33xx-fw/cc33xx-fw_git.bbappend"
+    BBMASK:append = " layers/meta-boardfarm/recipes-bsp/u-boot/u-boot-imx_2025.04.bbappend"
 
-  # deploy_directories: |
-  #   # Specify directories to deploy
-  #   DEPLOY_DIR = "${TOPDIR}/deploy"
-  #   DEPLOY_DIR_IMAGE = "${DEPLOY_DIR}/images/${MACHINE}"
-  #   CVE_CHECK_SUMMARY_DIR = "${DEPLOY_DIR}/cve-check-summary"
-    
+  deploy_directories: |
+    # Specify directories to deploy
+    BOARDFARM_DIR = "${TOPDIR}/boardfarm"
+    TI_COMMON_DEPLOY = "${BOARDFARM_DIR}"
+    DEPLOY_DIR_IMAGE = "${BOARDFARM_DIR}/images/${MACHINE}"
+    SDK_DEPLOY = "${BOARDFARM_DIR}/sdk/${MACHINE}"
+
+  systemd_refinement: |
+    # remove OSC 3008 support from the console
+    PACKAGECONFIG:remove:pn-systemd:beaglebone-yocto = "osc-context"
+
 bblayers_conf_header:
   kas: |
     # Additional layers can be added here

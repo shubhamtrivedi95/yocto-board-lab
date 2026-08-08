@@ -1,4 +1,4 @@
-IMAGE_FSTYPES:prepend = "ext4 ext4.gz "
+IMAGE_FSTYPES:prepend = "ext4 ext4.gz wic wic.zst "
 IMAGE_INSTALL:append = " \
     stress-ng \
     rt-tests \
@@ -17,3 +17,12 @@ IMAGE_INSTALL:append:beagley-ai = " \
     wpa-supplicant \
     wifi-firstboot \
 "
+
+IMAGE_INSTALL:append:beaglebone-yocto:imx8mpfrdm = " \
+    zstd \
+"
+
+IMAGE_INSTALL:append = " e2fsprogs-resize2fs"
+
+IMAGE_FSTYPES:remove:qemuarm = "wic wic.zst"
+IMAGE_FSTYPES:remove:qemuarm64 = "wic wic.zst"

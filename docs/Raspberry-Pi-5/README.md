@@ -17,7 +17,7 @@
 ## 3. Yocto / Build Setup
 - Machine name: raspberrypi5
 - Layers used: meta-raspberrypi and the shared Yocto layers from common.yaml
-- Build command: kas shell kas/boards/rpi5.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+- Build command: ./run-kas.sh shell kas/boards/rpi5.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 - Notes / custom configuration: Uses the Poky distro and the Raspberry Pi BSP layer for the Pi 5 machine
 
 ## 4. Flashing and Booting

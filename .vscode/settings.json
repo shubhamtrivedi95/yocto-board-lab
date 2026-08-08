@@ -14,7 +14,7 @@
     "*.conf": "bitbake",
     "*.inc": "bitbake"
   },
-  "bitbake.commandWrapper": "${workspaceFolder}/.venv/bin/kas shell kas/boards/beagley-ai.yaml -c",
+  "bitbake.commandWrapper": "${workspaceFolder}/run-kas.sh  --shared-dir ${env:HOME}/yocto/yocto_data -- shell kas/boards/qemuarm.yaml -c",
   "bitbake.pathToBitbakeFolder": "${workspaceFolder}/layers/bitbake",
   "bitbake.parseOnSave": false,
   "files.watcherExclude": {
