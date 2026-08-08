@@ -32,7 +32,7 @@ Install the required packages on Ubuntu/Debian:
 
 ```bash
 sudo apt update
-sudo apt install -y python3 python3-pip python3-venv docker.io containerd
+sudo apt install -y python3 python3-pip python3-venv docker.io containerd bmap-tools
 ```
 
 Validate docker support:
