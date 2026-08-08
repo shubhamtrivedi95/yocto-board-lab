@@ -1,2 +1,1 @@
-kas==5.3
-websockets
+kas==5.4
