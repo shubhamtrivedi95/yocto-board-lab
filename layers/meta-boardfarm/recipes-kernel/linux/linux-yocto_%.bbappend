@@ -1,0 +1,1 @@
+COMPATIBLE_MACHINE:rock-5t = "rock-5t"
