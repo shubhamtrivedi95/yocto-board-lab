@@ -1,0 +1,76 @@
+DDR b8ce94f14b cym 25/09/26-15:48.05,fwver: v1.20
+ch0 ttot6
+ch1 ttot6
+ch2 ttot6
+ch3 ttot6
+ch0 ttot7
+LPDDR5, 2400MHz
+channel[0] BW=16 Col=10 Bk=16 CS0 Row=15 CS=1 Die BW=16 Size=1024MB
+ch1 ttot7
+channel[1] BW=16 Col=10 Bk=16 CS0 Row=15 CS=1 Die BW=16 Size=1024MB
+ch2 ttot7
+channel[2] BW=16 Col=10 Bk=16 CS0 Row=15 CS=1 Die BW=16 Size=1024MB
+ch3 ttot7
+channel[3] BW=16 Col=10 Bk=16 CS0 Row=15 CS=1 Die BW=16 Size=1024MB
+Manufacturer ID:0x6
+DQS rds\:l0,h1
+CH0 RX Vref:28.5%, TX Vref:21.0%,0.0%
+DQ rds\:h1 l1 l1 l0 h1 l1 h3 l0, h1 h1 h3 h2 h3 h1 h1 h2
+
+DQS rds\:l0,h1
+CH1 RX Vref:27.9%, TX Vref:22.0%,0.0%
+DQ rds\:h5 h1 h2 h2 h1 h4 h2 h2, l0 l0 h4 h1 h1 l0 h1 h1
+
+DQS rds\:l0,h1
+CH2 RX Vref:27.5%, TX Vref:21.0%,0.0%
+DQ rds\:h1 h1 h1 h2 h6 h1 h1 h2, h1 h1 h3 h4 l0 l0 h2 h1
+
+DQS rds\:h1,l0
+CH3 RX Vref:25.0%, TX Vref:21.0%,0.0%
+DQ rds\:h3 h2 l1 h1 l0 h3 h1 h1, h6 h4 h1 l3 h1 l0 h2 l0
+
+stride=0x2, ddr\_config=0x2
+hash ch\_mask0-1 0x20 0x40, bank\_mask0-3 0x0 0x2400 0x44800 0x89000, rank\_mask0 0x0
+change to F1: 534MHz
+ch0 ttot6
+ch1 ttot6
+ch2 ttot6
+ch3 ttot6
+change to F2: 1320MHz
+ch0 ttot8
+ch1 ttot8
+ch2 ttot8
+ch3 ttot8
+change to F3: 1968MHz
+ch0 ttot6
+ch1 ttot6
+ch2 ttot6
+ch3 ttot6
+change to F0: 2400MHz
+ch0 ttot7
+ch1 ttot7
+ch2 ttot7
+ch3 ttot7
+out
+U-Boot SPL board init
+U-Boot SPL rk2410-2017.09-62-6c807ac-g063ee5b #runner (Jan 13 2026 - 06:15:10)
+sfc cmd=03H(6BH-x4)
+unrecognized JEDEC id bytes: ff, ff, ff
+Trying to boot from MMC2
+spl: partition error
+Trying fit image at 0x4000 sector
+
+## Verified-boot: 0
+
+## Checking atf-1 0x00040000 ... sha256(7612223b82...) + OK
+
+## Checking u-boot 0x00800000 ... sha256(b99940d937...) + OK
+
+## Checking fdt-1 0x008ee400 ... sha256(a885693a29...) + OK
+
+## Checking atf-2 0x000f0000 ... sha256(b2af21b504...) + OK
+
+## Checking atf-3 0xff100000 ... sha256(70505bb764...) + OK
+
+Jumping to U-Boot(0x00800000) via ARM Trusted Firmware(0x00040000)
+Total: 637.361/960.872 ms
