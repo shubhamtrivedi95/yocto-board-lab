@@ -94,7 +94,7 @@ local_conf_header:
     OVERRIDES .= ":${BUILD_TYPE}"
     MIRROR_DATA_PATH ?= "${HOME}/yocto_data"
     # CONF_VERSION = "1"
-    INHERIT += "${@ 'own-mirrors' if d.getVar('BUILD_TYPE', True) == 'normal' else ''}"
+    INHERIT += "${@ 'own-mirrors' if d.getVar('BUILD_TYPE', True) == 'normal' and os.path.exists(d.getVar('MIRROR_DATA_PATH')) else ''}"
     # Use local source mirror first
     SOURCE_MIRROR_URL:normal = "file:///${MIRROR_DATA_PATH}/downloads/"
     # Check mirror before rebuilding
