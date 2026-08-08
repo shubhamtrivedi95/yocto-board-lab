@@ -37,3 +37,6 @@
 - Board support files: kas/boards/radxa-rock-5t.yaml, kas/common/radxa-common.yaml
 - Related notes / links: Repository build instructions in README.md
 
+## 7. Boot-Up
+
+Error message while booting from the SD card: [error](error.log)
