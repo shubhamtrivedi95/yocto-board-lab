@@ -1,12 +1,14 @@
 # BeagleBone Black Board Documentation
 
 ## 1. Overview
+
 - Board name: BeagleBone Black
 - SoC / CPU: TI AM3358
 - Vendor / reference design: BeagleBoard.org
 - Use case: General-purpose embedded development and prototyping
 
 ## 2. Board Specifications
+
 - Processor: TI AM3358 ARM Cortex-A8
 - RAM: 512 MB DDR3
 - Storage: 4 GB onboard eMMC (on supported variants) and microSD slot
@@ -15,24 +17,28 @@
 - Boot media: microSD card or onboard eMMC
 
 ## 3. Yocto / Build Setup
+
 - Machine name: beaglebone-yocto
 - Layers used: meta-yocto, meta-yocto-bsp, openembedded-core, meta-openembedded, meta-swupdate, meta-boardfarm
 - Build command: ./run-kas.sh shell kas/boards/bbb.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 - Notes / custom configuration: Uses the Poky distro, targets core-image-full-cmdline, enables systemd, and applies build-history and root-login related configuration from the shared KAS settings
 
 ## 4. Flashing and Booting
+
 - Image type: WIC-based SD/eMMC image produced for the beaglebone-yocto machine
 - Flashing method: Write the generated .wic.bz2 or .sdimg image to a microSD card with dd or a flashing tool such as balenaEtcher
 - Boot instructions: Insert the boot media, connect a serial console if needed, power on the board, and wait for U-Boot/Linux to boot
 - Common issues: Incorrect boot media selection, failed image write, or lack of serial console access for debugging
 
 ## 5. Validation
+
 - Status: Validated in this repository for core-image-full-cmdline
 - Tested images: core-image-full-cmdline
 - Validation notes: Built successfully with the provided KAS configuration and booted in the lab environment
 - Known issues: Booting may require the correct media selection and console access for troubleshooting
 
 ## 6. References
+
 - Vendor documentation: BeagleBoard.org BeagleBone Black documentation and booting guide
 - Board support files: kas/boards/bbb.yaml, layers/meta-yocto/meta-yocto-bsp/conf/machine/beaglebone-yocto.conf, layers/meta-yocto/meta-yocto-bsp/wic/beaglebone-yocto.wks, layers/meta-yocto/meta-yocto-bsp/README.hardware.md
 - Related notes / links: Repository build instructions in README.md
@@ -93,6 +99,7 @@ zstd -dc core-image-full-cmdline-beaglebone-yocto.rootfs.wic.zst | sudo dd of=/d
 sudo sync
 popd
 ```
+
 > Warning: Do not flash the wrong block device. Always verify the target device path with `lsblk` before running the write command.
 
 ### 7.4 Boot the board from microSD
@@ -100,7 +107,6 @@ popd
 For normal SD boot, insert the flashed microSD card into the BeagleBone Black and power it on.
 
 Some BeagleBone Black variants boot from the SD card automatically when a valid SD image is present. If the board still prefers eMMC, use the board's boot selection mechanism or hold the boot button during power-on according to the board hardware documentation.
-
 
 ### 7.5 Optional: force SD boot by invalidating the eMMC boot area
 
@@ -123,40 +129,39 @@ If the board is booted from an SD card and you want to update the onboard eMMC, 
 
 2. Allow empty password over ssh for Beaglebone Black
 
-(Execute on Beaglebone Black)
+    (Execute on Beaglebone Black)
 
-```bash
-sed -i 's/^#PermitEmptyPasswords no/PermitEmptyPasswords yes/' /etc/ssh/sshd_config
-systemctl restart ssh.socket
-```
+    ```bash
+    sed -i 's/^#PermitEmptyPasswords no/PermitEmptyPasswords yes/' /etc/ssh/sshd_config
+    systemctl restart ssh.socket
+    ```
 
 3. Copy the image to the target board from the host:
 
-```bash
-pushd build/boardfarm/images/beaglebone-yocto
-scp core-image-full-cmdline-beaglebone-yocto.rootfs.wic.zst root@<board-ip>:
-popd
-```
+    ```bash
+    pushd build/boardfarm/images/beaglebone-yocto
+    scp core-image-full-cmdline-beaglebone-yocto.rootfs.wic.zst root@<board-ip>:
+    popd
+    ```
 
 4. On the target board, verify the eMMC device path (usually `/dev/mmcblk1` when booted from SD):
 
-```bash
-lsblk
-```
+    ```bash
+    lsblk
+    ```
 
 5. Flash the eMMC from the board:
 
-```bash
-cd ~
-zstd -dc core-image-full-cmdline-beaglebone-yocto.rootfs.wic.zst | sudo dd of=/dev/mmcblk1 bs=4M conv=fsync status=progress
-sudo sync
-```
+    ```bash
+    cd ~
+    zstd -dc core-image-full-cmdline-beaglebone-yocto.rootfs.wic.zst | sudo dd of=/dev/mmcblk1 bs=4M conv=fsync status=progress
+    sudo sync
+    ```
 
-- `zstd -dc` decompresses the image to stdout.
-- `dd of=/dev/mmcblk1` writes the image to the eMMC device.
-- `bs=4M` improves write throughput.
-- `status=progress` shows progress while writing.
-- `sudo sync` flushes buffers to the device.
+    - `zstd -dc` decompresses the image to stdout.
+    - `dd of=/dev/mmcblk1` writes the image to the eMMC device.
+    - `bs=4M` improves write throughput.
+    - `status=progress` shows progress while writing.
+    - `sudo sync` flushes buffers to the device.
 
 Always validate the target device name and do not use this command on the wrong device.
-
