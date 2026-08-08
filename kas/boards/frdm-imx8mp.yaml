@@ -15,3 +15,7 @@ repos:
     branch: "wrynose"
     commit: "6b5b47d86538a92b1c513dbec974a9e0536d0101"
     path: "layers/meta-freescale"
+
+local_conf_header: 
+  imx8_customization: |
+    BBMASK:remove = " layers/meta-boardfarm/recipes-bsp/u-boot/u-boot-imx_2025.04.bbappend"
