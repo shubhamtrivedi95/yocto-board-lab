@@ -1,0 +1,10 @@
+header:
+  version: 14
+  includes:
+    - kas/common/nvidia-common.yaml
+
+machine: "p3768-0000-p3767-0003" # Jetson orin nano 8GB module
+distro: tegrademo
+
+target:
+  - demo-image-base
