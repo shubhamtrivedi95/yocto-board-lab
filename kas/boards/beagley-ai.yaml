@@ -1,0 +1,92 @@
+header:
+  version: 14
+  includes:
+    - kas/common/arm-common.yaml
+
+machine: "beagley-ai"
+distro: "arago"
+target: arago-base-image
+
+repos:
+  meta-ti:
+    url: "https://git.yoctoproject.org/meta-ti"
+    branch: "wrynose"
+    commit: "0801af5f5f1fd526fa2dda7309c02f10f43bc072"
+    path: "layers/meta-ti"
+    layers:
+      meta-beagle:
+      meta-ti-bsp:
+      meta-ti-extras:
+      meta-ti-test:
+  meta-arago:
+    url: "https://git.yoctoproject.org/meta-arago"
+    branch: "wrynose"
+    commit: "0e97f60a272300075fe2dcb4190873b19c32663c"
+    path: "layers/meta-arago"
+    layers:
+      meta-arago-distro:
+      meta-arago-extras:
+
+  meta-openembedded:
+    url: "https://git.openembedded.org/meta-openembedded"
+    branch: "wrynose"
+    commit: "a43f0d532c399458cae44ce66f3799a220fbb497"
+    path: "layers/meta-openembedded"
+    layers:
+      meta-networking:
+      meta-python:
+      meta-oe:
+      meta-gnome:
+      meta-filesystems:
+      meta-multimedia:
+
+  meta-virtualization:
+    url: "https://git.yoctoproject.org/meta-virtualization"
+    branch: "wrynose"
+    commit: "781735b97ae5013cacabbecd38e6da6b510cf3fb"
+    path: "layers/meta-virtualization"
+
+  meta-clang:
+    url: "https://github.com/kraj/meta-clang"
+    branch: "wrynose"
+    commit: "78c5e12f08198f4f257a9348516d2103cd617c1d"
+    path: "layers/meta-clang"
+
+  meta-lts-mixins:
+    url: "https://git.yoctoproject.org/meta-lts-mixins"
+    branch: "wrynose/linux-firmware"
+    commit: "11dcf7de2b3cf74fd11049684903b73206a69df6"
+    path: "layers/meta-lts-mixins"
+
+  # meta-qt6:
+  #   url: "https://code.qt.io/yocto/meta-qt6.git"
+  #   branch: "6.9"
+  #   commit: "c7d71f4cece4d1fe3110c945b9bd40ca82960e05"
+
+  # meta-edgeai:
+  #   url: "https://git.ti.com/git/edgeai/meta-edgeai.git"
+  #   branch: "scarthgap-next"
+  #   commit: "7d07e25a15632494d6c30efb09d68de1c95f9394"
+
+  # meta-tisdk:
+  #   url: "https://git.ti.com/git/ti-sdk-linux/meta-tisdk.git"
+  #   branch: "wrynose"
+  #   commit: "d121aad521825b605d40fcaad3e218c3fb7c2fd9"
+  #   path: "layers/meta-tisdk"
+  #   layers:
+  #     meta-ti-foundational:
+
+
+local_conf_header:
+  oe-layersetup-local-conf-template: |
+    # CONF_VERSION is increased each time build/conf/ changes incompatibly
+    CONF_VERSION = "2"
+
+    # Set terminal types by default it expects gnome-terminal
+    # but we chose xterm
+    TERMCMD = "${XTERM_TERMCMD}"
+    TERMCMDRUN = "${XTERM_TERMCMDRUN}"
+    ARAGO_EXTRA:remove:pn-packagegroup-arago-base = "dropbear"
+    PREFERRED_PROVIDER_virtual/bootloader = "u-boot-ti-staging"
+    BBMASK:remove = " layers/meta-boardfarm/recipes-kernel/linux/linux-bb.org_6.12.bbappend"
+    BBMASK:remove = " layers/meta-boardfarm/recipes-bsp/cc33xx-fw/cc33xx-fw_git.bbappend"

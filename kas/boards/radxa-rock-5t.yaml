@@ -1,0 +1,13 @@
+header:
+  version: 14
+  includes:
+    - kas/common/radxa-common.yaml
+
+machine: "rock-5b"
+
+
+# WARNING: linux-yocto-6.18.24+git-r0 do_kernel_configcheck: [kernel config]: This BSP contains fragments with warnings:
+
+
+# [INFO]: the following symbols were not found in the active configuration:
+#      - CONFIG_SND_SOC_ROCKCHIP

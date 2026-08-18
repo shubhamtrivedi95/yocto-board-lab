@@ -1,0 +1,9 @@
+header:
+  version: 14
+  includes:
+    - kas/common/common.yaml
+
+machine: "beaglebone-yocto"
+distro: "poky"
+target:
+  - "core-image-full-cmdline"

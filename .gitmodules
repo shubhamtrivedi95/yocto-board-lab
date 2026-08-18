@@ -1,0 +1,4 @@
+[submodule "yocto-vex-check"]
+	path = tools/yocto-vex-check
+	url = https://gitlab.com/ygreky/public/yocto-vex-check.git
+	branch = main

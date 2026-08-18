@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "yocto-project.yocto-bitbake",
+        "ms-python.python",
+        "tetradresearch.vscode-h2o",
+        "kweihmann.oelint-vscode"
+    ]
+}

@@ -1,0 +1,9 @@
+header:
+  version: 14
+  includes:
+    - kas/common/radxa-common.yaml
+
+machine: "radxa-zero-3w"
+distro: "poky"
+target:
+  - "core-image-full-cmdline"

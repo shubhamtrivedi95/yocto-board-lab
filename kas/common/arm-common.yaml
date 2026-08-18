@@ -1,0 +1,14 @@
+header:
+  version: 14
+  includes:
+    - kas/common/common.yaml
+
+repos:
+  meta-arm:
+    url: "https://git.yoctoproject.org/meta-arm"
+    branch: "wrynose"
+    commit: "d3b55902fb9963978be90d6f283296de456b4b63"
+    path: "layers/meta-arm"
+    layers:
+      meta-arm:
+      meta-arm-toolchain:

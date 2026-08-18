@@ -1,0 +1,21 @@
+
+header:
+  version: 14
+  includes:
+    - kas/common/common.yaml
+
+machine: "imx8mpfrdm"
+distro: "poky"
+target:
+  - "core-image-full-cmdline"
+
+repos:
+  meta-freescale:
+    url: "https://git.yoctoproject.org/meta-freescale"
+    branch: "wrynose"
+    commit: "6b5b47d86538a92b1c513dbec974a9e0536d0101"
+    path: "layers/meta-freescale"
+
+local_conf_header: 
+  imx8_customization: |
+    BBMASK:remove = " layers/meta-boardfarm/recipes-bsp/u-boot/u-boot-imx_2025.04.bbappend"
