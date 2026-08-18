@@ -23,7 +23,7 @@
 ## 4. Flashing and Booting
 - Image type: core-image-full-cmdline
 - Flashing method: Not applicable; the image is run through QEMU
-- Boot instructions: Use runqemu with the generated image for emulated boot testing
+- Boot instructions: kas shell kas/boards/armqemu.yaml -c "runqemu qemuarm nographic"
 - Common issues: Emulator configuration issues and missing QEMU support packages
 
 ## 5. Validation

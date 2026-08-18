@@ -123,7 +123,10 @@ Use `./run-kas.sh shell <kas-file-path>` to enter the build environment and run 
 To boot the QEMU-built image:
 
 ```bash
-./run-kas.sh shell kas/boards/armqemu.yaml -c "runqemu qemuarm nographic"
+# Build the image first using kas-container
+./run-kas.sh shell kas/boards/qemuarm.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+# Run the image in qemu using kas command
+kas shell kas/boards/armqemu.yaml -c "runqemu qemuarm nographic"
 ```
 
 ## Status Matrix
