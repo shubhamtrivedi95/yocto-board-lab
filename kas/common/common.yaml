@@ -39,7 +39,11 @@ repos:
     path: "layers/meta-openembedded"
     layers:
       meta-oe:
-
+  meta-cyclonedx:
+    url: "https://github.com/iris-GmbH/meta-cyclonedx.git"
+    branch: "wrynose"
+    commit: "0237a3a5e06d5c806190162f0de6cd118ae21262"
+    path: "layers/meta-cyclonedx"
   meta-boardfarm:
     path: "layers/meta-boardfarm"
 machine: "qemuarm64"
@@ -112,9 +116,15 @@ local_conf_header:
 
   cra_integration: |
     # Enable CRA integration
-    INHERIT += "create-spdx-3.0"
+    INHERIT += "cyclonedx-export"
+    INHERIT += "create-spdx"
     INHERIT += "sbom-cve-check-recipe"
     INHERIT += "vex"
+    CYCLONEDX_SPEC_VERSION = "1.7"
+    SPDX_PRETTY = "1"
+    SPDX_INCLUDE_KERNEL_CONFIG = "1"
+    SPDX_INCLUDE_PACKAGECONFIG = "1"
+
 
   recipe_append_management: |
     # Exclude certain recipes from being appended
