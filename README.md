@@ -74,48 +74,48 @@ Board-specific documentation for supported and in-progress targets is available 
 
 ## Build Instructions
 
-Use `./run-kas.sh shell <kas-file-path>` to enter the build environment and run `bitbake`.
+Use `./run-kas.sh -- shell <kas-file-path>` to enter the build environment and run `bitbake`. `--build-type` is optional and defaults to `normal`.
 
 ### BeagleBone Black
 
 ```bash
-./run-kas.sh shell kas/boards/bbb.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+./run-kas.sh -- shell kas/boards/bbb.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 ```
 
 ### BeagleY-AI
 
 ```bash
-./run-kas.sh shell kas/boards/beagley-ai.yaml -c "bitbake -c cleanall arago-base-image && bitbake arago-base-image"
+./run-kas.sh -- shell kas/boards/beagley-ai.yaml -c "bitbake -c cleanall arago-base-image && bitbake arago-base-image"
 ```
 
 ### Raspberry Pi 5
 
 ```bash
-./run-kas.sh shell kas/boards/rpi5.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+./run-kas.sh -- shell kas/boards/rpi5.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 ```
 
 ### Radxa Zero 3W
 
 ```bash
-./run-kas.sh shell kas/boards/radxa-zero-3w.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+./run-kas.sh -- shell kas/boards/radxa-zero-3w.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 ```
 
 ### FRDM-iMX8M Plus
 
 ```bash
-./run-kas.sh shell kas/boards/frdm-imx8mp.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+./run-kas.sh -- shell kas/boards/frdm-imx8mp.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 ```
 
 ### Arm QEMU (qemuarm)
 
 ```bash
-./run-kas.sh shell kas/boards/qemuarm.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+./run-kas.sh -- shell kas/boards/qemuarm.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 ```
 
 ### Arm64 QEMU (qemuarm64)
 
 ```bash
-./run-kas.sh shell kas/boards/qemuarm64.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+./run-kas.sh -- shell kas/boards/qemuarm64.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 ```
 
 ## Running QEMU
@@ -124,10 +124,20 @@ To boot the QEMU-built image:
 
 ```bash
 # Build the image first using kas-container
-./run-kas.sh shell kas/boards/qemuarm.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+./run-kas.sh -- shell kas/boards/qemuarm.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 # Run the image in qemu using kas command
-kas shell kas/boards/armqemu.yaml -c "runqemu qemuarm nographic"
+kas -- shell kas/boards/armqemu.yaml -c "runqemu qemuarm nographic slirp"
 ```
+
+In the `runqemu` command:
+
+- `nographic` disables the graphical display and uses the terminal for the QEMU
+  console.
+- `slirp` enables user-mode networking, so QEMU does not need a TAP device or
+  root privileges. `runqemu` forwards host port `2222` to guest port `22` and
+  host port `2323` to guest port `23` by default. Connect to a forwarded port
+  on the host (for example, `ssh -p 2222 root@127.0.0.1`) if the corresponding
+  service is running in the guest.
 
 ## Status Matrix
 
@@ -154,9 +164,10 @@ kas shell kas/boards/armqemu.yaml -c "runqemu qemuarm nographic"
 
 The wrapper script will create a Python virtual environment in `.venv` and install `kas==5.4` automatically if needed. It forwards the arguments after `--` directly to `kas-container`.
 
+- Host networking is enabled by default. Pass `--no-host-network` before `--` to omit `--network host` from the container runtime arguments. Without host networking, reaching services forwarded by QEMU from the host may require additional container network or port-forwarding configuration.
 - `--shared-dir <directory>` mounts the host directory at `/builder/yocto_data` inside the container.
-- `BUILD_TYPE=normal` is the default mode and does not require `--shared-dir` unless you want to reuse or persist caches on the host.
-- `BUILD_TYPE=master` requires `--shared-dir` and is used when you want the container to read from and write to a host-side shared `downloads`/`sstate-cache` directory.
+- `--build-type normal` is the default mode (used when `--build-type` is omitted) and does not require `--shared-dir` unless you want to reuse or persist caches on the host.
+- `--build-type master` requires `--shared-dir` and is used when you want the container to read from and write to a host-side shared `downloads`/`sstate-cache` directory.
 
 ### Example: use existing pre-fetched downloads and sstate-cache
 
@@ -173,10 +184,66 @@ This mounts the existing host cache into the container so the build can reuse it
 If you want the build to populate or update the shared host cache, run:
 
 ```bash
-BUILD_TYPE="master" ./run-kas.sh --shared-dir "$HOME/yocto/yocto_data" -- shell kas/boards/bbb.yaml
+./run-kas.sh --build-type master --shared-dir "$HOME/yocto/yocto_data" -- shell kas/boards/bbb.yaml
 ```
 
-`BUILD_TYPE=master` makes the wrapper enforce the shared directory requirement and enables the build environment to persist downloads and `sstate-cache` to the host path.
+`--build-type master` makes the wrapper enforce the shared directory requirement and enables the build environment to persist downloads and `sstate-cache` to the host path.
+
+## Backup and restore of downloads and sstate-cache
+
+The shared cache directory (`MIRROR_DATA_PATH`, containing `downloads` and `sstate-cache`) is wired up in [kas/common/common.yaml](kas/common/common.yaml). If `MIRROR_DATA_PATH` is not set it defaults to `${HOME}/yocto_data`.
+
+How the build uses it:
+
+- `BUILD_TYPE=normal` (default): if the directory exists, `own-mirrors` is enabled. Sources are fetched from `${MIRROR_DATA_PATH}/downloads/` (`SOURCE_MIRROR_URL`) and sstate objects from `${MIRROR_DATA_PATH}/sstate-cache/` (`SSTATE_MIRRORS`) before anything is downloaded or rebuilt. The directory is only read.
+- `BUILD_TYPE=master`: `DL_DIR` and `SSTATE_DIR` point to `${MIRROR_DATA_PATH}/downloads` and `${MIRROR_DATA_PATH}/sstate-cache`, and mirror tarballs are generated, so the directory is populated or refreshed.
+
+With `run-kas.sh`, the host directory given by `--shared-dir` is mounted at `/builder/yocto_data` in the container.
+
+### Backup
+
+1. Populate or refresh the cache with a `master` build:
+
+   ```bash
+   ./run-kas.sh --build-type master --shared-dir "$HOME/yocto/yocto_data" -- shell kas/boards/bbb.yaml
+   ```
+
+2. Archive the directory:
+
+   ```bash
+   cd "$HOME/yocto"
+   zip -r yocto_data.zip yocto_data
+   ```
+
+### Restore
+
+1. Copy `yocto_data.zip` to the target Linux host and extract it:
+
+   ```bash
+   cd "$HOME/yocto"
+   unzip yocto_data.zip
+   ```
+
+2. Verify that the `downloads` and `sstate-cache` directories exist:
+
+   ```bash
+   ls -al "$HOME/yocto/yocto_data"
+   ```
+
+3. Build in `normal` mode against the restored cache.
+
+   With `run-kas.sh`:
+
+   ```bash
+   ./run-kas.sh --shared-dir "$HOME/yocto/yocto_data" -- shell kas/boards/bbb.yaml
+   ```
+
+   With a local `kas` install:
+
+   ```bash
+   export MIRROR_DATA_PATH=$HOME/yocto/yocto_data
+   kas shell kas/boards/bbb.yaml -c "bitbake core-image-full-cmdline"
+   ```
 
 ## Inspect a generated root filesystem image
 

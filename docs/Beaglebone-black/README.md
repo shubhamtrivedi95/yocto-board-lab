@@ -20,7 +20,7 @@
 
 - Machine name: beaglebone-yocto
 - Layers used: meta-yocto, meta-yocto-bsp, openembedded-core, meta-openembedded, meta-swupdate, meta-boardfarm
-- Build command: ./run-kas.sh shell kas/boards/bbb.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+- Build command: ./run-kas.sh -- shell kas/boards/bbb.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 - Notes / custom configuration: Uses the Poky distro, targets core-image-full-cmdline, enables systemd, and applies build-history and root-login related configuration from the shared KAS settings
 
 ## 4. Flashing and Booting

@@ -17,7 +17,7 @@
 ## 3. Yocto / Build Setup
 - Machine name: beagley-ai
 - Layers used: meta-ti, meta-arago, meta-openembedded, meta-virtualization, meta-clang, meta-lts-mixins
-- Build command: ./run-kas.sh shell kas/boards/beagley-ai.yaml -c "bitbake -c cleanall arago-base-image && bitbake arago-base-image"
+- Build command: ./run-kas.sh -- shell kas/boards/beagley-ai.yaml -c "bitbake -c cleanall arago-base-image && bitbake arago-base-image"
 - Notes / custom configuration: Uses the Arago distro and the arago-base-image target with TI-specific layer support
 
 ## 4. Flashing and Booting
@@ -36,4 +36,3 @@
 - Vendor documentation: BeagleBoard.org BeagleY-AI documentation and TI BSP references
 - Board support files: kas/boards/beagley-ai.yaml, layers/meta-ti/meta-beagle/conf/machine/beagley-ai.conf, layers/meta-arago
 - Related notes / links: Repository build instructions in README.md
-

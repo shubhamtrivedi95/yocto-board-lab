@@ -17,7 +17,7 @@
 ## 3. Yocto / Build Setup
 - Machine name: imx8mpfrdm
 - Layers used: meta-freescale, meta-openembedded, and the shared Yocto layers from common.yaml
-- Build command: ./run-kas.sh shell kas/boards/frdm-imx8mp.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+- Build command: ./run-kas.sh -- shell kas/boards/frdm-imx8mp.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 - Notes / custom configuration: Uses the Poky distro and the shared local configuration from the board YAML. The machine configuration is based on the NXP FRDM reference files for imx8mpfrdm.conf and imx8mp-lpddr4-frdm.conf, adapted for compatibility with Yocto Wrynose.
 
 ## 4. Flashing and Booting

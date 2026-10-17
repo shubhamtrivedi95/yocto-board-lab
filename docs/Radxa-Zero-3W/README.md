@@ -20,7 +20,7 @@
 
 - Machine name: radxa-zero-3w
 - Layers used: Shared Radxa support layers from kas/common/radxa-common.yaml
-- Build command: ./run-kas.sh shell kas/boards/radxa-zero-3w.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+- Build command: ./run-kas.sh -- shell kas/boards/radxa-zero-3w.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 - Notes / custom configuration: Uses the Radxa common layer and is currently listed as in-progress support in the repository
 
 ## 4. Flashing and Booting

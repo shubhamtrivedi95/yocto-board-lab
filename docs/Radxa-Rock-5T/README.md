@@ -17,7 +17,7 @@
 ## 3. Yocto / Build Setup
 - Machine name: rock-5b
 - Layers used: Shared Radxa support layers from kas/common/radxa-common.yaml
-- Build command: ./run-kas.sh shell kas/boards/radxa-rock-5t.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
+- Build command: ./run-kas.sh -- shell kas/boards/radxa-rock-5t.yaml -c "bitbake -c cleanall core-image-full-cmdline && bitbake core-image-full-cmdline"
 - Notes / custom configuration: The current board definition uses the Radxa common layer and reports a known kernel fragment warning during build validation
 
 ## 4. Flashing and Booting
@@ -36,4 +36,3 @@
 - Vendor documentation: Radxa Rock 5T documentation
 - Board support files: kas/boards/radxa-rock-5t.yaml, kas/common/radxa-common.yaml
 - Related notes / links: Repository build instructions in README.md
-
