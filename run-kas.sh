@@ -18,22 +18,24 @@ usage()
 {
     cat <<EOF
 Usage:
-    $0 [--shared-dir <directory>] -- <kas-container arguments>
+    $0 [--build-type <normal|master>] [--shared-dir <directory>] [--no-host-network] -- <kas-container arguments>
 
 Options:
+    --build-type <normal|master>
+        Value exported to the container as BUILD_TYPE.
+        Optional. Defaults to normal when not specified.
+
+    --no-host-network
+        Do not pass --network host to kas-container.
+        Host networking is enabled by default.
+
     --shared-dir <directory>
         Optional host directory mounted as:
         /builder/yocto_data
 
-        Required when BUILD_TYPE=master.
+        Required when --build-type is master.
 
-Environment variables:
-    BUILD_TYPE
-        Supported values:
-            normal
-            master
-
-        If BUILD_TYPE=master, --shared-dir is required.
+If --build-type is master, --shared-dir is required.
 
 Examples:
 
@@ -41,10 +43,12 @@ Examples:
 
     $0 --shared-dir "\$HOME/yocto/yocto_data" -- shell kas/boards/bbb.yaml
 
-    BUILD_TYPE=normal $0 -- shell kas/boards/bbb.yaml
+    $0 --build-type normal -- shell kas/boards/bbb.yaml
 
-    BUILD_TYPE=master \\
-        $0 --shared-dir "\$HOME/yocto/yocto_data" \\
+    $0 --no-host-network -- shell kas/boards/qemuarm.yaml
+
+    $0 --build-type master \\
+        --shared-dir "\$HOME/yocto/yocto_data" \\
         -- shell kas/boards/bbb.yaml
 EOF
 }
@@ -56,23 +60,8 @@ EOF
 SHARED_DIR=""
 KAS_ARGS=()
 
-BUILD_TYPE="${BUILD_TYPE:-}"
-
-# -----------------------------------------------------------------------------
-# Validate BUILD_TYPE
-# -----------------------------------------------------------------------------
-
-if [[ -n "$BUILD_TYPE" ]]; then
-    case "$BUILD_TYPE" in
-        normal|master)
-            ;;
-        *)
-            echo "ERROR: Invalid BUILD_TYPE: '$BUILD_TYPE'" >&2
-            echo "       BUILD_TYPE must be either 'normal' or 'master'." >&2
-            exit 1
-            ;;
-    esac
-fi
+BUILD_TYPE="normal"
+HOST_NETWORK=true
 
 # -----------------------------------------------------------------------------
 # Parse wrapper arguments
@@ -88,6 +77,21 @@ while [[ $# -gt 0 ]]; do
 
             SHARED_DIR="$2"
             shift 2
+            ;;
+
+        --build-type)
+            if [[ $# -lt 2 ]]; then
+                echo "ERROR: --build-type requires an argument." >&2
+                exit 1
+            fi
+
+            BUILD_TYPE="$2"
+            shift 2
+            ;;
+
+        --no-host-network)
+            HOST_NETWORK=false
+            shift
             ;;
 
         -h|--help)
@@ -109,6 +113,20 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
+
+# -----------------------------------------------------------------------------
+# Validate BUILD_TYPE
+# -----------------------------------------------------------------------------
+
+case "$BUILD_TYPE" in
+    normal|master)
+        ;;
+    *)
+        echo "ERROR: Invalid build type: '$BUILD_TYPE'" >&2
+        echo "       --build-type must be either 'normal' or 'master'." >&2
+        exit 1
+        ;;
+esac
 
 # -----------------------------------------------------------------------------
 # Validate kas arguments
@@ -192,14 +210,15 @@ if [[ -n "$SHARED_DIR" ]]; then
     RUNTIME_ARGS="-v ${SHARED_DIR}:/builder/yocto_data"
 fi
 
-# Add BUILD_TYPE only when set
-if [[ -n "$BUILD_TYPE" ]]; then
+# Always pass the validated BUILD_TYPE to the container
+if [[ -n "$RUNTIME_ARGS" ]]; then
+    RUNTIME_ARGS+=" "
+fi
 
-    if [[ -n "$RUNTIME_ARGS" ]]; then
-        RUNTIME_ARGS+=" "
-    fi
+RUNTIME_ARGS+="-e BUILD_TYPE=${BUILD_TYPE}"
 
-    RUNTIME_ARGS+="-e BUILD_TYPE=${BUILD_TYPE}"
+if [[ "$HOST_NETWORK" == true ]]; then
+    RUNTIME_ARGS+=" --network host"
 fi
 
 # -----------------------------------------------------------------------------
