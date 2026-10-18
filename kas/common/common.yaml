@@ -39,6 +39,7 @@ repos:
     path: "layers/meta-openembedded"
     layers:
       meta-oe:
+      meta-perl:
 
   meta-boardfarm:
     path: "layers/meta-boardfarm"
