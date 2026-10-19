@@ -1,0 +1,39 @@
+
+header:
+  version: 14
+  includes:
+    - kas/common/common.yaml
+
+machine: "imx93w-14x12-lpddr4x-frdm"
+distro: "poky"
+target:
+  - "core-image-full-cmdline"
+
+repos:
+  meta-freescale:
+    url: "https://git.yoctoproject.org/meta-freescale"
+    branch: "wrynose"
+    commit: "6b5b47d86538a92b1c513dbec974a9e0536d0101"
+    path: "layers/meta-freescale"
+
+  meta-imx:
+    url: "https://github.com/nxp-imx/meta-imx.git"
+    branch: "wrynose-6.18.20-2.0.0"
+    commit: "7163fab7d8923da56d5cf8a29c05ae4edab3ac2f"
+    path: "layers/meta-imx"
+    layers:
+      meta-imx-bsp:
+
+  meta-secure-core:
+    url: "https://github.com/Wind-River/meta-secure-core.git"
+    branch: "wrynose"
+    commit: "07a99ae241acd488a2feda1ededf87dc70dfde80"
+    path: "layers/meta-secure-core"
+    layers:
+      meta-efi-secure-boot:
+      meta-secure-core-common:
+      meta-signing-key:
+
+local_conf_header: 
+  imx93_customization: |
+
