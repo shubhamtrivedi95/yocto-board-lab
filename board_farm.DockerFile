@@ -18,8 +18,14 @@ ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
 
-RUN useradd -ms /bin/bash builder
+COPY requirements.txt /tmp/requirements.txt
+RUN python3 -m venv /opt/kas-venv \
+    && /opt/kas-venv/bin/pip install --no-cache-dir -r /tmp/requirements.txt
+
+ENV PATH="/opt/kas-venv/bin:${PATH}"
+
+RUN useradd --create-home --home-dir /builder --shell /bin/bash builder
 RUN echo "builder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 USER builder
-WORKDIR /home/builder
+WORKDIR /builder
